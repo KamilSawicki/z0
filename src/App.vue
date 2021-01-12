@@ -1,32 +1,42 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app>
+    <Nav v-if="$store.state.isAuth" class="nav"></Nav>
+    <router-view class="router-view"></router-view>
+  </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import Nav from "./components/Nav";
 
-#nav {
-  padding: 30px;
+export default {
+  name: 'App',
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+  components: {
+    Nav,
+  },
 
-    &.router-link-exact-active {
-      color: #42b983;
+  data: () => ({
+    //
+  }),
+  mounted(){
+    if(this.$route.name!=='Home' && !this.$store.state.isAuth){
+      this.$router.push({name: 'Home'})
     }
   }
+};
+</script>
+
+<style lang="scss">
+.nav{
+  float: left;
+  min-height: 100vh;
+  position: absolute;
+  z-index: 2;
+}
+.router-view{
+  min-height: 100vh;
+}
+h1{
+  margin-bottom: 1rem;
 }
 </style>
